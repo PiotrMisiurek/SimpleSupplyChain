@@ -9,7 +9,7 @@ contract SimpleSupplyChain is Ownable {
     mapping(uint => Item) public items;
     uint public itemsCount;
 
-    event ItemStateChanged(uint indexed _itemId, uint8 _state, address indexed _sender, address indexed _paymentReceiver);
+    event ItemStateChanged(uint indexed _itemId, uint8 _state, uint _price, address indexed _sender, address indexed _paymentReceiver);
 
 
     enum ItemState{NotExisting, Listed, Paid, Sent}
@@ -30,7 +30,7 @@ contract SimpleSupplyChain is Ownable {
             paymentReceiver: new PaymentReceiver(this, _price, itemsCount)
         });
         
-        emit ItemStateChanged(itemsCount, uint8(newItem.state), msg.sender, address(newItem.paymentReceiver));
+        emit ItemStateChanged(itemsCount, uint8(newItem.state), _price, msg.sender, address(newItem.paymentReceiver));
         
         items[itemsCount++] = newItem;
     }
@@ -40,7 +40,7 @@ contract SimpleSupplyChain is Ownable {
         require(msg.value == items[_itemId].price, 'Pay exact price');
         items[_itemId].state = ItemState.Paid;
     
-        emit ItemStateChanged(_itemId, uint8(items[_itemId].state), msg.sender, address(items[_itemId].paymentReceiver));
+        emit ItemStateChanged(_itemId, uint8(items[_itemId].state), msg.value, msg.sender, address(items[_itemId].paymentReceiver));
     }
     
     function sendItem(uint _itemId) public onlyOwner {
@@ -50,7 +50,7 @@ contract SimpleSupplyChain is Ownable {
         
         items[_itemId].state = ItemState.Sent;
         
-        emit ItemStateChanged(_itemId, uint8(items[_itemId].state), msg.sender, address(items[_itemId].paymentReceiver));
+        emit ItemStateChanged(_itemId, uint8(items[_itemId].state), items[_itemId].price, msg.sender, address(items[_itemId].paymentReceiver));
     }
     
     receive() payable external {

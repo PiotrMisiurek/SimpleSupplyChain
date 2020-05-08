@@ -57,9 +57,9 @@
       "type": "receive"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.6.7+commit.b8d736ae\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"contract SimpleSupplyChain\",\"name\":\"_parentContract\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_price\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_id\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"stateMutability\":\"nonpayable\",\"type\":\"fallback\"},{\"inputs\":[],\"name\":\"id\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"price\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"stateMutability\":\"payable\",\"type\":\"receive\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/piotrmisiurek/ethereum/truffle-hallo-world/contracts/PaymentReceiver.sol\":\"PaymentReceiver\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/piotrmisiurek/ethereum/truffle-hallo-world/contracts/Ownable.sol\":{\"keccak256\":\"0x55572da024897ce30946f47d8f57da0de42590a3e54a6c9b6606005390da7751\",\"urls\":[\"bzz-raw://f921c14fb4ae30465575096ff10e0e558f1d627d04f50630ee2e410356576832\",\"dweb:/ipfs/QmXB6o8xLRBb84YENcMwarxA5fDF2xeeLqeGS9vZJCmuwW\"]},\"/Users/piotrmisiurek/ethereum/truffle-hallo-world/contracts/PaymentReceiver.sol\":{\"keccak256\":\"0xcfcd4506d4346461d28e0bf5424ee2ec1fde064d4b54ecd28b14fab69a0cc7dc\",\"urls\":[\"bzz-raw://e46212e60e2965586d861d88aa8c16f8e41ad8717f6bbe1b6546daaebf395132\",\"dweb:/ipfs/QmV6w1LKueQUhKbT4xVudFnrvfwFmAF6QwHiuuofKNBWbQ\"]},\"/Users/piotrmisiurek/ethereum/truffle-hallo-world/contracts/SimpleSupplyChain.sol\":{\"keccak256\":\"0xed8b744cacb21004bbe100fe70e83ea95b0a2b95866b1600110b1c7a7bd1ecda\",\"urls\":[\"bzz-raw://34d7940bba9a421ba2a12900fee9b5759ceeb832ad848061094cf5895e704305\",\"dweb:/ipfs/QmX8kapCRbDFgjMAQQGQRxTcMCcT7bwiDzP8Z78DdWgske\"]}},\"version\":1}",
-  "bytecode": "0x608060405234801561001057600080fd5b506040516103723803806103728339818101604052606081101561003357600080fd5b8101908080519060200190929190805190602001909291908051906020019092919050505082600260006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555081600081905550806001819055505050506102b9806100b96000396000f3fe60806040526004361061002d5760003560e01c8063a035b1fe14610221578063af640d0f1461024c57610212565b36610212576000600260009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1634600154604051602401808281526020019150506040516020818303038152906040527fc5391144000000000000000000000000000000000000000000000000000000007bffffffffffffffffffffffffffffffffffffffffffffffffffffffff19166020820180517bffffffffffffffffffffffffffffffffffffffffffffffffffffffff83818316178352505050506040518082805190602001908083835b60208310610131578051825260208201915060208101905060208303925061010e565b6001836020036101000a03801982511681845116808217855250505050505090500191505060006040518083038185875af1925050503d8060008114610193576040519150601f19603f3d011682016040523d82523d6000602084013e610198565b606091505b505090508061020f576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260118152602001807f4974656d2063616e74206265207061696400000000000000000000000000000081525060200191505060405180910390fd5b50005b34801561021e57600080fd5b50005b34801561022d57600080fd5b50610236610277565b6040518082815260200191505060405180910390f35b34801561025857600080fd5b5061026161027d565b6040518082815260200191505060405180910390f35b60005481565b6001548156fea2646970667358221220a0476d23f2e5c4333aa2daebdfd39135246c81c4a09f7edc3d0d58e38a51537264736f6c63430006070033",
-  "deployedBytecode": "0x60806040526004361061002d5760003560e01c8063a035b1fe14610221578063af640d0f1461024c57610212565b36610212576000600260009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1634600154604051602401808281526020019150506040516020818303038152906040527fc5391144000000000000000000000000000000000000000000000000000000007bffffffffffffffffffffffffffffffffffffffffffffffffffffffff19166020820180517bffffffffffffffffffffffffffffffffffffffffffffffffffffffff83818316178352505050506040518082805190602001908083835b60208310610131578051825260208201915060208101905060208303925061010e565b6001836020036101000a03801982511681845116808217855250505050505090500191505060006040518083038185875af1925050503d8060008114610193576040519150601f19603f3d011682016040523d82523d6000602084013e610198565b606091505b505090508061020f576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260118152602001807f4974656d2063616e74206265207061696400000000000000000000000000000081525060200191505060405180910390fd5b50005b34801561021e57600080fd5b50005b34801561022d57600080fd5b50610236610277565b6040518082815260200191505060405180910390f35b34801561025857600080fd5b5061026161027d565b6040518082815260200191505060405180910390f35b60005481565b6001548156fea2646970667358221220a0476d23f2e5c4333aa2daebdfd39135246c81c4a09f7edc3d0d58e38a51537264736f6c63430006070033",
+  "metadata": "{\"compiler\":{\"version\":\"0.6.7+commit.b8d736ae\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"contract SimpleSupplyChain\",\"name\":\"_parentContract\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_price\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_id\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"stateMutability\":\"nonpayable\",\"type\":\"fallback\"},{\"inputs\":[],\"name\":\"id\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"price\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"stateMutability\":\"payable\",\"type\":\"receive\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/piotrmisiurek/ethereum/truffle-hallo-world/contracts/PaymentReceiver.sol\":\"PaymentReceiver\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/piotrmisiurek/ethereum/truffle-hallo-world/contracts/Ownable.sol\":{\"keccak256\":\"0x55572da024897ce30946f47d8f57da0de42590a3e54a6c9b6606005390da7751\",\"urls\":[\"bzz-raw://f921c14fb4ae30465575096ff10e0e558f1d627d04f50630ee2e410356576832\",\"dweb:/ipfs/QmXB6o8xLRBb84YENcMwarxA5fDF2xeeLqeGS9vZJCmuwW\"]},\"/Users/piotrmisiurek/ethereum/truffle-hallo-world/contracts/PaymentReceiver.sol\":{\"keccak256\":\"0xcfcd4506d4346461d28e0bf5424ee2ec1fde064d4b54ecd28b14fab69a0cc7dc\",\"urls\":[\"bzz-raw://e46212e60e2965586d861d88aa8c16f8e41ad8717f6bbe1b6546daaebf395132\",\"dweb:/ipfs/QmV6w1LKueQUhKbT4xVudFnrvfwFmAF6QwHiuuofKNBWbQ\"]},\"/Users/piotrmisiurek/ethereum/truffle-hallo-world/contracts/SimpleSupplyChain.sol\":{\"keccak256\":\"0x5d395ad7b1abb800242bffee7dc139afecf4587312018df14b8707d49751bc9c\",\"urls\":[\"bzz-raw://34249bf9b964e61f79f5ad800cc6e87be71f28bd664663c86a1fdfcd7f5e442d\",\"dweb:/ipfs/QmTE7EfMwsTjcivucywRXccLVSSxA14UrsW6mnJuFdHq7Q\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b506040516103723803806103728339818101604052606081101561003357600080fd5b8101908080519060200190929190805190602001909291908051906020019092919050505082600260006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555081600081905550806001819055505050506102b9806100b96000396000f3fe60806040526004361061002d5760003560e01c8063a035b1fe14610221578063af640d0f1461024c57610212565b36610212576000600260009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1634600154604051602401808281526020019150506040516020818303038152906040527fc5391144000000000000000000000000000000000000000000000000000000007bffffffffffffffffffffffffffffffffffffffffffffffffffffffff19166020820180517bffffffffffffffffffffffffffffffffffffffffffffffffffffffff83818316178352505050506040518082805190602001908083835b60208310610131578051825260208201915060208101905060208303925061010e565b6001836020036101000a03801982511681845116808217855250505050505090500191505060006040518083038185875af1925050503d8060008114610193576040519150601f19603f3d011682016040523d82523d6000602084013e610198565b606091505b505090508061020f576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260118152602001807f4974656d2063616e74206265207061696400000000000000000000000000000081525060200191505060405180910390fd5b50005b34801561021e57600080fd5b50005b34801561022d57600080fd5b50610236610277565b6040518082815260200191505060405180910390f35b34801561025857600080fd5b5061026161027d565b6040518082815260200191505060405180910390f35b60005481565b6001548156fea2646970667358221220e49b071ab755a2e15725cae783b0ea0c6d4b5a953af444e1e9ded09cc4198e1b64736f6c63430006070033",
+  "deployedBytecode": "0x60806040526004361061002d5760003560e01c8063a035b1fe14610221578063af640d0f1461024c57610212565b36610212576000600260009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1634600154604051602401808281526020019150506040516020818303038152906040527fc5391144000000000000000000000000000000000000000000000000000000007bffffffffffffffffffffffffffffffffffffffffffffffffffffffff19166020820180517bffffffffffffffffffffffffffffffffffffffffffffffffffffffff83818316178352505050506040518082805190602001908083835b60208310610131578051825260208201915060208101905060208303925061010e565b6001836020036101000a03801982511681845116808217855250505050505090500191505060006040518083038185875af1925050503d8060008114610193576040519150601f19603f3d011682016040523d82523d6000602084013e610198565b606091505b505090508061020f576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260118152602001807f4974656d2063616e74206265207061696400000000000000000000000000000081525060200191505060405180910390fd5b50005b34801561021e57600080fd5b50005b34801561022d57600080fd5b50610236610277565b6040518082815260200191505060405180910390f35b34801561025857600080fd5b5061026161027d565b6040518082815260200191505060405180910390f35b60005481565b6001548156fea2646970667358221220e49b071ab755a2e15725cae783b0ea0c6d4b5a953af444e1e9ded09cc4198e1b64736f6c63430006070033",
   "immutableReferences": {},
   "sourceMap": "60:553:2:-:0;;;182:168;5:9:-1;2:2;;;27:1;24;17:12;2:2;182:168:2;;;;;;;;;;;;;;;15:2:-1;10:3;7:11;4:2;;;31:1;28;21:12;4:2;182:168:2;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;286:15;269:14;;:32;;;;;;;;;;;;;;;;;;319:6;311:5;:14;;;;340:3;335:2;:8;;;;182:168;;;60:553;;;;;;",
   "deployedSourceMap": "60:553:2:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;398:12;424:14;;;;;;;;;;;416:28;;453:9;512:2;;465:50;;;;;;;;;;;;;;;49:4:-1;39:7;30;26:21;22:32;13:7;6:49;465:50:2;;;;;;;38:4:-1;29:7;25:18;67:10;61:17;96:58;199:8;192:4;186;182:15;179:29;167:10;160:49;0:215;;;465:50:2;416:100;;;;;;;;;;;;;36:153:-1;66:2;61:3;58:11;36:153;;182:3;176:10;171:3;164:23;98:2;93:3;89:12;82:19;;123:2;118:3;114:12;107:19;;148:2;143:3;139:12;132:19;;36:153;;;274:1;267:3;263:2;259:12;254:3;250:22;246:30;315:4;311:9;305:3;299:10;295:26;356:4;350:3;344:10;340:21;389:7;380;377:20;372:3;365:33;3:399;;;416:100:2;;;;;;;;;;;;;;;;;;;;;;;;;12:1:-1;19;14:27;;;;67:4;61:11;56:16;;134:4;130:9;123:4;105:16;101:27;97:43;94:1;90:51;84:4;77:65;157:16;154:1;147:27;211:16;208:1;201:4;198:1;194:12;179:49;5:228;;14:27;32:4;27:9;;5:228;;397:119:2;;;543:7;535:37;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;360:219;60:553;;;5:9:-1;2:2;;;27:1;24;17:12;2:2;60:553:2;;91:17;;5:9:-1;2:2;;;27:1;24;17:12;2:2;91:17:2;;;:::i;:::-;;;;;;;;;;;;;;;;;;;114:14;;5:9:-1;2:2;;;27:1;24;17:12;2:2;114:14:2;;;:::i;:::-;;;;;;;;;;;;;;;;;;;91:17;;;;:::o;114:14::-;;;;:::o",
@@ -92,7 +92,7 @@
         "id": 74,
         "nodeType": "ImportDirective",
         "scope": 134,
-        "sourceUnit": 344,
+        "sourceUnit": 353,
         "src": "25:33:2",
         "symbolAliases": [],
         "unitAlias": ""
@@ -181,7 +181,7 @@
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_SimpleSupplyChain_$343",
+              "typeIdentifier": "t_contract$_SimpleSupplyChain_$352",
               "typeString": "contract SimpleSupplyChain"
             },
             "typeName": {
@@ -189,10 +189,10 @@
               "id": 79,
               "name": "SimpleSupplyChain",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 343,
+              "referencedDeclaration": 352,
               "src": "139:17:2",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_SimpleSupplyChain_$343",
+                "typeIdentifier": "t_contract$_SimpleSupplyChain_$352",
                 "typeString": "contract SimpleSupplyChain"
               }
             },
@@ -222,7 +222,7 @@
                       "referencedDeclaration": 80,
                       "src": "269:14:2",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_SimpleSupplyChain_$343",
+                        "typeIdentifier": "t_contract$_SimpleSupplyChain_$352",
                         "typeString": "contract SimpleSupplyChain"
                       }
                     },
@@ -237,13 +237,13 @@
                       "referencedDeclaration": 82,
                       "src": "286:15:2",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_SimpleSupplyChain_$343",
+                        "typeIdentifier": "t_contract$_SimpleSupplyChain_$352",
                         "typeString": "contract SimpleSupplyChain"
                       }
                     },
                     "src": "269:32:2",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_SimpleSupplyChain_$343",
+                      "typeIdentifier": "t_contract$_SimpleSupplyChain_$352",
                       "typeString": "contract SimpleSupplyChain"
                     }
                   },
@@ -369,7 +369,7 @@
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_contract$_SimpleSupplyChain_$343",
+                    "typeIdentifier": "t_contract$_SimpleSupplyChain_$352",
                     "typeString": "contract SimpleSupplyChain"
                   },
                   "typeName": {
@@ -377,10 +377,10 @@
                     "id": 81,
                     "name": "SimpleSupplyChain",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 343,
+                    "referencedDeclaration": 352,
                     "src": "194:17:2",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_SimpleSupplyChain_$343",
+                      "typeIdentifier": "t_contract$_SimpleSupplyChain_$352",
                       "typeString": "contract SimpleSupplyChain"
                     }
                   },
@@ -614,7 +614,7 @@
                               "referencedDeclaration": 80,
                               "src": "424:14:2",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_contract$_SimpleSupplyChain_$343",
+                                "typeIdentifier": "t_contract$_SimpleSupplyChain_$352",
                                 "typeString": "contract SimpleSupplyChain"
                               }
                             }
@@ -622,7 +622,7 @@
                           "expression": {
                             "argumentTypes": [
                               {
-                                "typeIdentifier": "t_contract$_SimpleSupplyChain_$343",
+                                "typeIdentifier": "t_contract$_SimpleSupplyChain_$352",
                                 "typeString": "contract SimpleSupplyChain"
                               }
                             ],
@@ -916,7 +916,7 @@
         "id": 74,
         "nodeType": "ImportDirective",
         "scope": 134,
-        "sourceUnit": 344,
+        "sourceUnit": 353,
         "src": "25:33:2",
         "symbolAliases": [],
         "unitAlias": ""
@@ -1005,7 +1005,7 @@
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_SimpleSupplyChain_$343",
+              "typeIdentifier": "t_contract$_SimpleSupplyChain_$352",
               "typeString": "contract SimpleSupplyChain"
             },
             "typeName": {
@@ -1013,10 +1013,10 @@
               "id": 79,
               "name": "SimpleSupplyChain",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 343,
+              "referencedDeclaration": 352,
               "src": "139:17:2",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_SimpleSupplyChain_$343",
+                "typeIdentifier": "t_contract$_SimpleSupplyChain_$352",
                 "typeString": "contract SimpleSupplyChain"
               }
             },
@@ -1046,7 +1046,7 @@
                       "referencedDeclaration": 80,
                       "src": "269:14:2",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_SimpleSupplyChain_$343",
+                        "typeIdentifier": "t_contract$_SimpleSupplyChain_$352",
                         "typeString": "contract SimpleSupplyChain"
                       }
                     },
@@ -1061,13 +1061,13 @@
                       "referencedDeclaration": 82,
                       "src": "286:15:2",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_SimpleSupplyChain_$343",
+                        "typeIdentifier": "t_contract$_SimpleSupplyChain_$352",
                         "typeString": "contract SimpleSupplyChain"
                       }
                     },
                     "src": "269:32:2",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_SimpleSupplyChain_$343",
+                      "typeIdentifier": "t_contract$_SimpleSupplyChain_$352",
                       "typeString": "contract SimpleSupplyChain"
                     }
                   },
@@ -1193,7 +1193,7 @@
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_contract$_SimpleSupplyChain_$343",
+                    "typeIdentifier": "t_contract$_SimpleSupplyChain_$352",
                     "typeString": "contract SimpleSupplyChain"
                   },
                   "typeName": {
@@ -1201,10 +1201,10 @@
                     "id": 81,
                     "name": "SimpleSupplyChain",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 343,
+                    "referencedDeclaration": 352,
                     "src": "194:17:2",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_SimpleSupplyChain_$343",
+                      "typeIdentifier": "t_contract$_SimpleSupplyChain_$352",
                       "typeString": "contract SimpleSupplyChain"
                     }
                   },
@@ -1438,7 +1438,7 @@
                               "referencedDeclaration": 80,
                               "src": "424:14:2",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_contract$_SimpleSupplyChain_$343",
+                                "typeIdentifier": "t_contract$_SimpleSupplyChain_$352",
                                 "typeString": "contract SimpleSupplyChain"
                               }
                             }
@@ -1446,7 +1446,7 @@
                           "expression": {
                             "argumentTypes": [
                               {
-                                "typeIdentifier": "t_contract$_SimpleSupplyChain_$343",
+                                "typeIdentifier": "t_contract$_SimpleSupplyChain_$352",
                                 "typeString": "contract SimpleSupplyChain"
                               }
                             ],
@@ -1719,7 +1719,7 @@
   },
   "networks": {},
   "schemaVersion": "3.1.0",
-  "updatedAt": "2020-05-07T11:59:12.122Z",
+  "updatedAt": "2020-05-08T09:27:33.451Z",
   "devdoc": {
     "methods": {}
   },
