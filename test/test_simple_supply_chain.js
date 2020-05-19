@@ -1,29 +1,176 @@
 const SimpleSupplyChain = artifacts.require("./SimpleSupplyChain.sol");
 const PaymentReceiver = artifacts.require("./PaymentReceiver.sol")
+const truffleAssert = require('truffle-assertions');
 
 contract("SimpleSupplyChain", accounts => {
-    it("allows to list new item", async function() {
-        const simpleSupplyChain = await SimpleSupplyChain.deployed();
-        const name = "FooBar";
-        const price = 563;
-    
-        const tx = await simpleSupplyChain.listItem(name, price, { from: accounts[0] });
+    const name = "FooBar";
+    const price = 563;
 
-        assert.equal(tx.logs[0].args._state, 1);
-        assert.equal(tx.logs[0].args._itemId, 0);
-
-        assert.equal(await simpleSupplyChain.itemsCount(), 1);
-
-        const newListedItem = await simpleSupplyChain.items(0);
-
-        assert.equal(newListedItem.name, name);
-        assert.equal(newListedItem.price, price);
-        assert.equal(newListedItem.state, 1);
-
-        const paymentReceiver = await PaymentReceiver.at(newListedItem.paymentReceiver);
-
-        assert.equal(await paymentReceiver.price(), price);
-        assert.equal(await paymentReceiver.id(), 0);
+    beforeEach(async function() {
+        this.simpleSupplyChain = await SimpleSupplyChain.new();
     });
+
+    describe("receive", async function(){
+        it("rejects all transfers", async function(){
+            await truffleAssert.reverts(
+                this.simpleSupplyChain.send(price, { from: accounts[0] }),
+                "We dont want your money"
+            );
+        })
+    });
+
+    describe("fallback", async function(){
+        it("is not implemented yet", async function(){
+            await truffleAssert.reverts(
+                this.simpleSupplyChain.send(price, { from: accounts[0], data: "0x001" }),
+                "Not implemented yet"
+            )
+        })
+    })
+
+    describe("listItem", async function() {
+        describe("by contract owner", async function(){
+            it("lists new item and creates payment receiver contract for it", async function() {
+                const tx = await this.simpleSupplyChain.listItem(name, price, { from: accounts[0] });
+          
+                assert.equal(tx.logs[0].args._state, 1);
+                assert.equal(tx.logs[0].args._itemId, 0);
+        
+                assert.equal(await this.simpleSupplyChain.itemsCount(), 1);
+        
+                const newListedItem = await this.simpleSupplyChain.items(0);
+        
+                assert.equal(newListedItem.name, name);
+                assert.equal(newListedItem.price, price);
+                assert.equal(newListedItem.state, 1);
+        
+                const paymentReceiver = await PaymentReceiver.at(newListedItem.paymentReceiver);
+        
+                assert.equal(await paymentReceiver.price(), price);
+                assert.equal(await paymentReceiver.id(), 0);
+            });
+        });
+
+        describe("by not contract owner", async function(){
+            it("reverts transaction", async function(){
+                await truffleAssert.reverts(
+                    this.simpleSupplyChain.listItem(name, price, { from: accounts[1] }),
+                    "401"
+                )
+            });
+        })
+       
+    });
+
+    describe("payForItem", async function() {
+        describe("listed item", async function() {
+            beforeEach(async function () {
+                await this.simpleSupplyChain.listItem(name, price, { from: accounts[0] });
+            });
+
+            it("accepts exact payment", async function(){
+                const tx = await this.simpleSupplyChain.payForItem(0, { from: accounts[0], value: price });
+                const emittedEvent = tx.logs[0].args;
+
+                assert.equal(emittedEvent._itemId, 0);
+                assert.equal(emittedEvent._state, 2);
+
+                const item = await this.simpleSupplyChain.items(0);
+
+                assert.equal(item.state, 2);
+            });
+
+            it("rejects underpayment", async function(){
+                await truffleAssert.reverts(
+                    this.simpleSupplyChain.payForItem(0, { from: accounts[0], value: price - 1 }),
+                    "Pay exact price"
+                );
+            });
+
+            it("rejects overpayment", async function(){
+                await truffleAssert.reverts(
+                    this.simpleSupplyChain.payForItem(0, { from: accounts[0], value: price + 1}),
+                    "Pay exact price"
+                )
+            });
+        });
+
+        describe("paid item", async function(){
+            beforeEach(async function() {
+                await this.simpleSupplyChain.listItem(name, price, { from: accounts[0] });
+                await this.simpleSupplyChain.payForItem(0, { from: accounts[0], value: price });;
+            });
+
+            it("rejects payment", async function() {
+                await truffleAssert.reverts(
+                    this.simpleSupplyChain.payForItem(0, { from: accounts[0], value: price }), 
+                    "Only listed items can be paid"
+                );
+            });
+        });
+
+        describe("sent item", async function() {
+            beforeEach(async function(){
+                await this.simpleSupplyChain.listItem(name, price, { from: accounts[0] });
+                await this.simpleSupplyChain.payForItem(0, { from: accounts[0], value: price });
+                await this.simpleSupplyChain.sendItem(0);
+            });
+
+            it("rejects payment", async function() {
+                await truffleAssert.reverts(
+                    this.simpleSupplyChain.payForItem(0, { from: accounts[0], value: price }), 
+                    "Only listed items can be paid"
+                );
+            });
+        });
+    });
+
+    describe("sendItem", async function(){
+        beforeEach(async function () {
+            await this.simpleSupplyChain.listItem(name, price, { from: accounts[0] });
+        });
+
+        describe("listed item", function(){
+            it("reverts transaction", async function(){
+                await truffleAssert.reverts(
+                    this.simpleSupplyChain.sendItem(0),
+                    "You can send only paid items"
+                );
+            });
+        });
+
+        describe("paid item", function(){
+            beforeEach(async function(){
+                await this.simpleSupplyChain.payForItem(0, { from: accounts[0], value: price} )
+            })
+
+            it("update items state and emit event", async function(){
+                const tx = await this.simpleSupplyChain.sendItem(0);
+
+                assert.equal(tx.logs[0].args._itemId, 0);
+                assert.equal(tx.logs[0].args._state, 3);
+
+                const item = await this.simpleSupplyChain.items(0);
+
+                assert.equal(item.state, 3);
+            })
+            
+        });
+
+        describe("sent item", function() {
+            beforeEach(async function(){
+                await this.simpleSupplyChain.payForItem(0, { from: accounts[0], value: price} )
+                await this.simpleSupplyChain.sendItem(0);
+            })
+
+            it("reverts transaction", async function(){
+                await truffleAssert.reverts(
+                    this.simpleSupplyChain.sendItem(0),
+                    "You can send only paid items"
+                );
+            });
+
+        })
+    })
     
 });
