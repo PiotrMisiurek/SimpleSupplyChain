@@ -32,10 +32,6 @@ contract("SimpleSupplyChain", accounts => {
         describe("by contract owner", async function(){
             it("lists new item and creates payment receiver contract for it", async function() {
                 const tx = await this.simpleSupplyChain.listItem(name, price, { from: accounts[0] });
-          
-                assert.equal(tx.logs[0].args._state, 1);
-                assert.equal(tx.logs[0].args._itemId, 0);
-        
                 assert.equal(await this.simpleSupplyChain.itemsCount(), 1);
         
                 const newListedItem = await this.simpleSupplyChain.items(0);
@@ -48,6 +44,18 @@ contract("SimpleSupplyChain", accounts => {
         
                 assert.equal(await paymentReceiver.price(), price);
                 assert.equal(await paymentReceiver.id(), 0);
+
+                truffleAssert.eventEmitted(
+                    tx,
+                    "ItemListed",
+                    {
+                        itemId: web3.utils.toBN(0),
+                        price: web3.utils.toBN(price),
+                        name: name,
+                        paymentReceiver: newListedItem.paymentReceiver,
+                        listedBy: accounts[0]
+                    }
+                )
             });
         });
 
@@ -70,14 +78,11 @@ contract("SimpleSupplyChain", accounts => {
 
             it("accepts exact payment", async function(){
                 const tx = await this.simpleSupplyChain.payForItem(0, { from: accounts[0], value: price });
-                const emittedEvent = tx.logs[0].args;
-
-                assert.equal(emittedEvent._itemId, 0);
-                assert.equal(emittedEvent._state, 2);
-
                 const item = await this.simpleSupplyChain.items(0);
 
                 assert.equal(item.state, 2);
+
+                truffleAssert.eventEmitted(tx, "ItemPaid", { itemId: web3.utils.toBN(0) });
             });
 
             it("rejects underpayment", async function(){
@@ -146,13 +151,11 @@ contract("SimpleSupplyChain", accounts => {
 
             it("update items state and emit event", async function(){
                 const tx = await this.simpleSupplyChain.sendItem(0);
-
-                assert.equal(tx.logs[0].args._itemId, 0);
-                assert.equal(tx.logs[0].args._state, 3);
-
                 const item = await this.simpleSupplyChain.items(0);
 
                 assert.equal(item.state, 3);
+
+                truffleAssert.eventEmitted(tx, "ItemSent", { itemId: web3.utils.toBN(0), sentBy: accounts[0] });
             })
             
         });
