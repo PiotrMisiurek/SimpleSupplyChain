@@ -1,5 +1,5 @@
 const SimpleSupplyChain = artifacts.require("./SimpleSupplyChain.sol");
-const PaymentReceiver = artifacts.require("./PaymentReceiver.sol")
+const PaymentReceiver = artifacts.require("./PaymentReceiver.sol");
 const truffleAssert = require('truffle-assertions');
 
 contract("SimpleSupplyChain", accounts => {
