@@ -1,9 +1,9 @@
 pragma solidity ^0.6.0;
 
-import './Ownable.sol';
+import './Whitelistable.sol';
 import './PaymentReceiver.sol';
 
-contract SimpleSupplyChain is Ownable {
+contract SimpleSupplyChain is Whitelistable {
     address constant addressZero = address(0);
     
     mapping(uint => Item) public items;
@@ -22,7 +22,7 @@ contract SimpleSupplyChain is Ownable {
         ItemState state;
     }
     
-    function listItem(string memory _name, uint _price) public onlyOwner{
+    function listItem(string memory _name, uint _price) public onlyWhitelisted{
         // TO DO walidacja pramsów
         Item memory newItem = Item({ 
             name: _name,
@@ -44,7 +44,7 @@ contract SimpleSupplyChain is Ownable {
         emit ItemPaid(_itemId);
     }
     
-    function sendItem(uint _itemId) public onlyOwner {
+    function sendItem(uint _itemId) public onlyWhitelisted {
         // TO DO whitelist of allowed sender addreses 
         
         require(items[_itemId].state == ItemState.Paid, 'You can send only paid items');

@@ -5,15 +5,19 @@ const truffleAssert = require('truffle-assertions');
 contract("SimpleSupplyChain", accounts => {
     const name = "FooBar";
     const price = 563;
+    const owner = accounts[2];
+    const notWhitelisted = accounts[1];
+    const whitelisted = accounts[0];
 
     beforeEach(async function() {
-        this.simpleSupplyChain = await SimpleSupplyChain.new();
+        this.simpleSupplyChain = await SimpleSupplyChain.new({ from: owner });
+        await this.simpleSupplyChain.addToWhitelist(accounts[0], { from: owner });
     });
 
     describe("receive", async function(){
         it("rejects all transfers", async function(){
             await truffleAssert.reverts(
-                this.simpleSupplyChain.send(price, { from: accounts[0] }),
+                this.simpleSupplyChain.send(price),
                 "We dont want your money"
             );
         })
@@ -22,16 +26,16 @@ contract("SimpleSupplyChain", accounts => {
     describe("fallback", async function(){
         it("is not implemented yet", async function(){
             await truffleAssert.reverts(
-                this.simpleSupplyChain.send(price, { from: accounts[0], data: "0x001" }),
+                this.simpleSupplyChain.send(price, { data: "0x001" }),
                 "Not implemented yet"
             )
         })
     })
 
     describe("listItem", async function() {
-        describe("by contract owner", async function(){
+        describe("by whitelisted address", async function(){
             it("lists new item and creates payment receiver contract for it", async function() {
-                const tx = await this.simpleSupplyChain.listItem(name, price, { from: accounts[0] });
+                const tx = await this.simpleSupplyChain.listItem(name, price, { from: whitelisted });
                 assert.equal(await this.simpleSupplyChain.itemsCount(), 1);
         
                 const newListedItem = await this.simpleSupplyChain.items(0);
@@ -59,10 +63,10 @@ contract("SimpleSupplyChain", accounts => {
             });
         });
 
-        describe("by not contract owner", async function(){
+        describe("by not whitelisted address", async function(){
             it("reverts transaction", async function(){
                 await truffleAssert.reverts(
-                    this.simpleSupplyChain.listItem(name, price, { from: accounts[1] }),
+                    this.simpleSupplyChain.listItem(name, price, { from: notWhitelisted }),
                     "401"
                 )
             });
@@ -73,11 +77,11 @@ contract("SimpleSupplyChain", accounts => {
     describe("payForItem", async function() {
         describe("listed item", async function() {
             beforeEach(async function () {
-                await this.simpleSupplyChain.listItem(name, price, { from: accounts[0] });
+                await this.simpleSupplyChain.listItem(name, price);
             });
 
             it("accepts exact payment", async function(){
-                const tx = await this.simpleSupplyChain.payForItem(0, { from: accounts[0], value: price });
+                const tx = await this.simpleSupplyChain.payForItem(0, { value: price });
                 const item = await this.simpleSupplyChain.items(0);
 
                 assert.equal(item.state, 2);
@@ -87,14 +91,14 @@ contract("SimpleSupplyChain", accounts => {
 
             it("rejects underpayment", async function(){
                 await truffleAssert.reverts(
-                    this.simpleSupplyChain.payForItem(0, { from: accounts[0], value: price - 1 }),
+                    this.simpleSupplyChain.payForItem(0, { value: price - 1 }),
                     "Pay exact price"
                 );
             });
 
             it("rejects overpayment", async function(){
                 await truffleAssert.reverts(
-                    this.simpleSupplyChain.payForItem(0, { from: accounts[0], value: price + 1}),
+                    this.simpleSupplyChain.payForItem(0, { value: price + 1}),
                     "Pay exact price"
                 )
             });
@@ -102,13 +106,13 @@ contract("SimpleSupplyChain", accounts => {
 
         describe("paid item", async function(){
             beforeEach(async function() {
-                await this.simpleSupplyChain.listItem(name, price, { from: accounts[0] });
-                await this.simpleSupplyChain.payForItem(0, { from: accounts[0], value: price });;
+                await this.simpleSupplyChain.listItem(name, price);
+                await this.simpleSupplyChain.payForItem(0, { value: price });;
             });
 
             it("rejects payment", async function() {
                 await truffleAssert.reverts(
-                    this.simpleSupplyChain.payForItem(0, { from: accounts[0], value: price }), 
+                    this.simpleSupplyChain.payForItem(0, { value: price }), 
                     "Only listed items can be paid"
                 );
             });
@@ -116,14 +120,14 @@ contract("SimpleSupplyChain", accounts => {
 
         describe("sent item", async function() {
             beforeEach(async function(){
-                await this.simpleSupplyChain.listItem(name, price, { from: accounts[0] });
-                await this.simpleSupplyChain.payForItem(0, { from: accounts[0], value: price });
+                await this.simpleSupplyChain.listItem(name, price);
+                await this.simpleSupplyChain.payForItem(0, { value: price });
                 await this.simpleSupplyChain.sendItem(0);
             });
 
             it("rejects payment", async function() {
                 await truffleAssert.reverts(
-                    this.simpleSupplyChain.payForItem(0, { from: accounts[0], value: price }), 
+                    this.simpleSupplyChain.payForItem(0, { value: price }), 
                     "Only listed items can be paid"
                 );
             });
@@ -132,7 +136,7 @@ contract("SimpleSupplyChain", accounts => {
 
     describe("sendItem", async function(){
         beforeEach(async function () {
-            await this.simpleSupplyChain.listItem(name, price, { from: accounts[0] });
+            await this.simpleSupplyChain.listItem(name, price);
         });
 
         describe("listed item", function(){
@@ -146,16 +150,27 @@ contract("SimpleSupplyChain", accounts => {
 
         describe("paid item", function(){
             beforeEach(async function(){
-                await this.simpleSupplyChain.payForItem(0, { from: accounts[0], value: price} )
-            })
+                await this.simpleSupplyChain.payForItem(0, { value: price} )
+            });
 
-            it("update items state and emit event", async function(){
-                const tx = await this.simpleSupplyChain.sendItem(0);
-                const item = await this.simpleSupplyChain.items(0);
+            describe("by whitelisted address", function() {
+                it("update items state and emit event", async function(){
+                    const tx = await this.simpleSupplyChain.sendItem(0, { from: whitelisted });
+                    const item = await this.simpleSupplyChain.items(0);
 
-                assert.equal(item.state, 3);
+                    assert.equal(item.state, 3);
 
-                truffleAssert.eventEmitted(tx, "ItemSent", { itemId: web3.utils.toBN(0), sentBy: accounts[0] });
+                    truffleAssert.eventEmitted(tx, "ItemSent", { itemId: web3.utils.toBN(0), sentBy: accounts[0] });
+                });
+            });
+
+            describe("by not whitelisted address", async function(){
+                it("reverts transactions", async function(){
+                    await truffleAssert.reverts(
+                        this.simpleSupplyChain.sendItem(0, { from: notWhitelisted }),
+                        "401"
+                    );
+                });
             })
             
         });
