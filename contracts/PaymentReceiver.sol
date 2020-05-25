@@ -1,12 +1,12 @@
 pragma solidity ^0.6.0;
 
-import './SimpleSupplyChain.sol';
+import "./SimpleSupplyChain.sol";
 
 contract PaymentReceiver {
     uint public price;
     uint public id;
     
-    SimpleSupplyChain parentContract;
+    SimpleSupplyChain public parentContract;
 
     event Paid(uint indexed itemId, address indexed sender);
     
@@ -17,12 +17,11 @@ contract PaymentReceiver {
     }
     
     receive() payable external {
-        (bool success, ) = address(parentContract).call{ value: msg.value }(abi.encodeWithSignature('payForItem(uint256)', id));
+        (bool success, ) = address(parentContract).
+            call{ value: msg.value }(abi.encodeWithSignature("payForItem(uint256)",id));
         
-        require(success, 'Item cant be paid');
+        require(success, "Item cant be paid");
 
         emit Paid(id, msg.sender);
     }
-    
-    fallback() external {}
 }

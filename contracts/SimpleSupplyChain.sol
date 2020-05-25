@@ -1,10 +1,11 @@
 pragma solidity ^0.6.0;
 
-import './Whitelistable.sol';
-import './PaymentReceiver.sol';
+import "./Whitelistable.sol";
+import "./PaymentReceiver.sol";
+
 
 contract SimpleSupplyChain is Whitelistable {
-    address constant addressZero = address(0);
+    address constant private ADDRESS_ZERO = address(0);
     
     mapping(uint => Item) public items;
     uint public itemsCount;
@@ -13,7 +14,7 @@ contract SimpleSupplyChain is Whitelistable {
     event ItemPaid(uint indexed itemId);
     event ItemSent(uint indexed itemId, address indexed sentBy);
 
-    enum ItemState{NotExisting, Listed, Paid, Sent}
+    enum ItemState{ NotExisting, Listed, Paid, Sent }
     
     struct Item {
         PaymentReceiver paymentReceiver;
@@ -23,7 +24,6 @@ contract SimpleSupplyChain is Whitelistable {
     }
     
     function listItem(string memory _name, uint _price) public onlyWhitelisted{
-        // TO DO walidacja pramsów
         Item memory newItem = Item({ 
             name: _name,
             price: _price,
@@ -37,17 +37,15 @@ contract SimpleSupplyChain is Whitelistable {
     }
     
     function payForItem(uint _itemId) payable public {
-        require(items[_itemId].state == ItemState.Listed, 'Only listed items can be paid');
-        require(msg.value == items[_itemId].price, 'Pay exact price');
+        require(items[_itemId].state == ItemState.Listed, "Only listed items can be paid");
+        require(msg.value == items[_itemId].price, "Pay exact price");
         items[_itemId].state = ItemState.Paid;
     
         emit ItemPaid(_itemId);
     }
     
     function sendItem(uint _itemId) public onlyWhitelisted {
-        // TO DO whitelist of allowed sender addreses 
-        
-        require(items[_itemId].state == ItemState.Paid, 'You can send only paid items');
+        require(items[_itemId].state == ItemState.Paid, "You can send only paid items");
         
         items[_itemId].state = ItemState.Sent;
         
@@ -55,12 +53,12 @@ contract SimpleSupplyChain is Whitelistable {
     }
     
     receive() payable external {
-        revert('We dont want your money');
+        revert("We dont want your money");
     }
     
     fallback() payable external {
         // TODO: allow to recieve funds with itemId in msg.data
         // https://solidity.readthedocs.io/en/v0.6.6/contracts.html#fallback-function
-        revert('Not implemented yet');
+        revert("Not implemented yet");
     }
 }

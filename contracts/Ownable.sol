@@ -1,10 +1,10 @@
-pragma solidity ^0.6.0;
+pragma solidity ^0.6.7;
 
 contract Ownable {
     address payable public owner;
     
     modifier onlyOwner {
-        require(isOwner(), '401');
+        require(isOwner(), "401");
         _;
     }
     
